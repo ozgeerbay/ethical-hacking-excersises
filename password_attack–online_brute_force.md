@@ -41,8 +41,8 @@ Hydra attempts multiple password guesses for the same user until valid credentia
 ```bash
 hydra -l testuser -P rockyou.txt -t 4 -f ssh://192.168.56.101
 ```
--t 4 → limits parallel connections
--f → stop after first valid password is found
+- -t 4 → limits parallel connections
+- -f → stop after first valid password is found
 
 ### Example 3 — Multiple Users
 ```bash
@@ -58,4 +58,5 @@ Notes
 
 This is an online attack: each attempt is sent to the target service.
 Speed is limited by network latency and service response time.
+
 Logs on the target system may record failed login attempts.
