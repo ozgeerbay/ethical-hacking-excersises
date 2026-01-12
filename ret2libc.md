@@ -29,7 +29,7 @@ For system("/bin/sh") we need:
 -A fake return address (anything valid-ish) after system returns
 -A pointer to a "/bin/sh" string as the first argument
 
-## Step 1 — Find the offset to saved return address
+## Step 1 - Find the offset to saved return address
 
 Method: send increasing patterns and observe crash location.
 
@@ -42,7 +42,7 @@ Evidence you typically include:
 - Try repeated pattern blocks and binary-search the crash point.
 - Confirm in a debugger by inspecting the stack at crash time.
 
-## Step 2 — Resolve system() address in libc
+## Step 2 - Resolve system() address in libc
 
 In your notes you had:
 
@@ -58,7 +58,7 @@ $1 = 0x________ <system>
 ```
 Record the system address.
 
-## Step 3 — Obtain a "/bin/sh" pointer
+## Step 3 - Obtain a "/bin/sh" pointer
 
 Two common approaches:
 A) Use libc’s own "/bin/sh" string:
@@ -67,7 +67,7 @@ In gdb you can search for it (your note: search-pattern "/bin/sh").
 B) Store "/bin/sh" in an environment variable:
 This is a classic trick in older labs because it’s easy to reference.
 
-## Step 4 — Build the ret2libc stack layout
+## Step 4 - Build the ret2libc stack layout
 
 Final stack layout (x86 conceptual):
 ```bash
@@ -77,10 +77,11 @@ FAKE_RET
 BINSH_ADDR
 ```
 
-## Step 5 — Run and verify
+## Step 5 - Run and verify
 
 ```bash
 $ ./vuln <crafted_input>
 $ whoami
 root
 ```
+
